@@ -1,0 +1,53 @@
+<div>
+  <h2>Consulta de Partidos por Equipo</h2>
+  <div class="search-box">
+    <input
+      type="text"
+      [(ngModel)]="teamName"
+      placeholder="Nombre del equipo (ej: Real Madrid)"
+      (keyup.enter)="handleSearch()"
+    />
+    <button (click)="handleSearch()" [disabled]="loading">
+      <span *ngIf="!loading">Buscar</span>
+      <span *ngIf="loading">Buscando...</span>
+    </button>
+  </div>
+
+  <!-- Estado de Carga -->
+  <div *ngIf="loading" class="feedback">Cargando resultados...</div>
+
+  <!-- Mensaje de Error -->
+  <div *ngIf="error" class="feedback error">{{ error }}</div>
+
+  <!-- Tabla de Resultados -->
+  <div *ngIf="matches.length > 0 && !loading" class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Competición</th>
+          <th>Local</th>
+          <th>Resultado</th>
+          <th>Visitante</th>
+          <th>Tarjetas Amarillas ({{ searchedTeam }})</th>
+          <th>Tarjetas Rojas ({{ searchedTeam }})</th>
+          <th>Córners Local</th>
+          <th>Córners Visitante</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of matches">
+          <td>{{ match.fixture.date | date:'dd/MM/yyyy' }}</td>
+          <td>{{ match.league.name }}</td>
+          <td>{{ match.teams.home.name }}</td>
+          <td>{{ match.goals.home ?? '-' }} - {{ match.goals.away ?? '-' }}</td>
+          <td>{{ match.teams.away.name }}</td>
+          <td>{{ match.yellowCards ?? '-' }}</td>
+          <td>{{ match.redCards ?? '-' }}</td>
+          <td>{{ match.homeCorners ?? '-' }}</td>
+          <td>{{ match.awayCorners ?? '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
