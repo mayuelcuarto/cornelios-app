@@ -1,0 +1,9 @@
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  lmdb: true
+  msgpackr-extract: true
+
+overrides:
+  undici: '>=7.29.0'
+  '@hono/node-server': '>=2.0.5'
